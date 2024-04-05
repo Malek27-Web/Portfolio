@@ -75,20 +75,25 @@ function close(){
    });
 });
 
-const $percent=document.querySelector('.percent');
+const $percent = document.querySelector('.percent');
 const $circle=document.querySelector('.circle');
-let load =0;
+let load = 0;
 
-function update(){
-    load+=load<100;
-    $percent.innerHTML=load;
-    $circle.style.background=`conic-gradient(from 0deg at 50%
-        50%,
-        #6f7bf7 0%,
-        #9bf8f4 ${load}%,
-        #101012 ${load}%)`;
+function update() {
+    load++; // Incrémentez de 1 à chaque appel
+    $percent.textContent = `${load}`;
+    $circle.style.background = `conic-gradient(from 0deg at 50% 50%, #6f7bf7 0%, #9bf8f4 ${load}%, #101012 ${load}%)`;
+
+    if (load >= 100) {
+        clearInterval(interval); // Arrêtez l'intervalle une fois que vous avez atteint 100%
+    }
 }
-setInterval(update,100);
+
+// Mettez à jour toutes les 50 ms pour atteindre 100% en 5 secondes
+let interval = setInterval(update, 10); 
+
+
+
 
 window.addEventListener('DOMContentLoaded', () => {
     // Utiliser setTimeout pour retarder l'exécution du code à l'intérieur
@@ -98,7 +103,7 @@ window.addEventListener('DOMContentLoaded', () => {
       loader.addEventListener('transitionend', () => {
         loader.style.display = 'none'; // Ceci masquera le loader après l'animation
       });
-    }, 11000); // 10 secondes
+    }, 2000); // 5 secondes
   });
   
 
